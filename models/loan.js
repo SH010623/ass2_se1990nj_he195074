@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const bookSchema = new Schema(
+const loanSchema = new Schema(
     {
         _id: {
             type: String
@@ -34,9 +34,9 @@ const bookSchema = new Schema(
         }        
     },
     {
-        collection: "members",
+        collection: "loans",
         timestamps: true
     }
 );
 
-module.exports = mongoose.model("Books", bookSchema);
+module.exports = mongoose.model("Loans", loanSchema);

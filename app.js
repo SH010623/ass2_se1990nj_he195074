@@ -61,6 +61,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bookRouter = require("./routes/bookRouter");
 const memberRouter = require("./routes/memberRouter");
+const loanRouter = require("./routes/loanRouter");
 
 const app = express();
 
@@ -69,7 +70,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/books", bookRouter);
 app.use("/members", memberRouter);
-//app.use("/loans", loanRouter);
+app.use("/loans", loanRouter);
 
 async function startServer() {
     try {
