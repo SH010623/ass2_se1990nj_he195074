@@ -42,6 +42,21 @@ loanRouter.get("/:id", async (req, res) => {
     }
 });
 
+// GET: Lấy danh sách phiếu mượn theo memberId
+loanRouter.get("/members/:memberId", async (req, res) => {
+    try {
+        const memberId = req.params.memberId;
 
+        const loans = await Loan.find({
+            member_id: memberId
+        });
+
+        res.status(200).json(loans);
+    } catch (err) {
+        res.status(500).json({
+            message: err.message
+        });
+    }
+});
 
 module.exports = loanRouter;
