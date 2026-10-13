@@ -10,27 +10,35 @@ const loanSchema = new Schema(
         member_id: {
             type: String
         },
-        items: {
-            type: String,
-            required: true,
-            minlength: 2
-        },
+        items: [
+            {
+                book_id: {
+                    type: String,
+                    required: true
+                },
+                quantity: {
+                    type: Number,
+                    required: true,
+                    min: 1
+                }
+            }
+        ],
         borrowDate: {
-            type: String,
+            type: Date,
             required: true
         },
         dueDate: {
-            type: String,
+            type: Date,
             required: true
         },
         returnDate: {
-            type: String,
-            required: true
+            type: Date,
+            default: null
         },
         status: {
             type: String,
-            required: true,
-            enum: ["Returned", "Borrowing", "Overdue"]
+            enum: ["Borrowing", "Returned", "Overdue"],
+            default: "Borrowing"
         }        
     },
     {

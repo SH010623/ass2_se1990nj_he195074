@@ -42,49 +42,6 @@ loanRouter.get("/:id", async (req, res) => {
     }
 });
 
-// PUT
-loanRouter.put("/:id", async (req, res) => {
-    try {
-        const loan = await Loan.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            {
-                new: true,
-                runValidators: true
-            }
-        );
 
-        if (!loan) {
-            return res.status(404).json({
-                message: "Loan not found"
-            });
-        }
-
-        res.json(loan);
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
-});
-
-// DELETE
-loanRouter.delete("/:id", async (req, res) => {
-    try {
-        const loan = await Loan.findByIdAndDelete(
-            req.params.id
-        );
-
-        if (!loan) {
-            return res.status(404).json({
-                message: "Loan not found"
-            });
-        }
-
-        res.status(200).json({
-            message: "Loan deleted successfully"
-        });
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
-});
 
 module.exports = loanRouter;
