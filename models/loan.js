@@ -1,50 +1,39 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+const { Schema, model } = mongoose;
 
-const { Schema } = mongoose;
-
-const loanSchema = new Schema(
-    {
-        _id: {
-            type: String
-        },
-        member_id: {
-            type: String
-        },
-        items: [
-            {
-                book_id: {
-                    type: String,
-                    required: true
-                },
-                quantity: {
-                    type: Number,
-                    required: true,
-                    min: 1
-                }
-            }
-        ],
-        borrowDate: {
-            type: Date,
-            required: true
-        },
-        dueDate: {
-            type: Date,
-            required: true
-        },
-        returnDate: {
-            type: Date,
-            default: null
-        },
-        status: {
-            type: String,
-            enum: ["Borrowing", "Returned", "Overdue"],
-            default: "Borrowing"
-        }        
+const loanSchema = new Schema({
+    _id: { 
+        type: String, 
+        default: () => new mongoose.Types.ObjectId().toString() 
     },
-    {
-        collection: "loans",
-        timestamps: true
+    member_id: {
+        type: String,
+        ref: "Member",
+        required: true
+    },
+    items: [{
+        _id: false,
+        book_id: {
+            type: String,
+            ref: "Book",
+            required: true
+        },
+        quantity: {
+            type: Number,
+            min: 1,
+            required: true
+        }
+    }],
+    borrowDate: { type: Date, default: Date.now },
+    dueDate: { type: Date, required: true },
+    returnDate: { type: Date, default: null },
+    status: {
+        type: String,
+        enum: ["Borrowing", "Returned", "Overdue"],
+        default: "Borrowing"
     }
-);
+}, {
+    timestamps: true
+});
 
-module.exports = mongoose.model("Loans", loanSchema);
+module.exports = model('Loan', loanSchema);
